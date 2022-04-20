@@ -7,7 +7,6 @@ MENU_LINKS = {
 }
 
 
-# Create your views here.
 def index(request):
     return render(
         request,
@@ -19,7 +18,6 @@ def index(request):
     )
 
 
-# Create your views here.
 def products(request):
     return render(
         request,
@@ -48,7 +46,6 @@ def products(request):
     )
 
 
-# Create your views here.
 def contact(request):
     return render(
         request,
