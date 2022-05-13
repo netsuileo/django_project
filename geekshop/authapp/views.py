@@ -1,9 +1,8 @@
+from authapp.forms import LoginForm, RegisterForm, UserEditForm
 from django.contrib import auth
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
-from authapp.forms import LoginForm, RegisterForm, UserEditForm
 
 
 def login(request):
@@ -56,4 +55,4 @@ def edit(request):
 
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect(reverse("index"))

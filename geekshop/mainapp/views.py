@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from .models import Category, Product
 
@@ -30,6 +30,23 @@ def products(request):
             "title": "Продукты",
             "menu": MENU_LINKS,
             "products": products,
+            "categories": categories,
+        },
+    )
+
+
+def category(request, pk):
+    categories = Category.objects.all()
+    category = get_object_or_404(Category, id=pk)
+    products = Product.objects.filter(category=category).order_by("price")
+    return render(
+        request,
+        "mainapp/category.html",
+        context={
+            "title": "Продукты",
+            "menu": MENU_LINKS,
+            "products": products,
+            "category": category,
             "categories": categories,
         },
     )

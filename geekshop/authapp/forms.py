@@ -1,8 +1,7 @@
+from authapp.models import ShopUser
 from django import forms
 from django.contrib.auth.forms import (AuthenticationForm, UserChangeForm,
                                        UserCreationForm)
-
-from authapp.models import ShopUser
 
 
 class LoginForm(AuthenticationForm):
@@ -30,4 +29,4 @@ class UserEditForm(UserChangeForm):
         if self.cleaned_data["city"] != "Владикавказ":
             raise forms.ValidationError("Мы работаем только во Владикавказе.")
 
-        return self.cleaned_data
+        return self.cleaned_data["city"]

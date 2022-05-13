@@ -17,15 +17,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-
 from mainapp import views as mainapp
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("authapp.urls", namespace="auth")),
+    path("basket/", include("basketapp.urls", namespace="basket")),
     path("", mainapp.index, name="index"),
     path("contact", mainapp.contact, name="contact"),
-    path("products", mainapp.products, name="products"),
+    path("products/", mainapp.products, name="products"),
+    path("products/<int:pk>/", mainapp.category, name="category"),
 ]
 
 if settings.DEBUG:
