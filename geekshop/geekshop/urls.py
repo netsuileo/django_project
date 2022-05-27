@@ -20,13 +20,14 @@ from django.urls import include, path
 from mainapp import views as mainapp
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("admin/", include("adminapp.urls", namespace="admin")),
     path("auth/", include("authapp.urls", namespace="auth")),
     path("basket/", include("basketapp.urls", namespace="basket")),
     path("", mainapp.index, name="index"),
     path("contact", mainapp.contact, name="contact"),
     path("products/", mainapp.products, name="products"),
     path("products/<int:pk>/", mainapp.category, name="category"),
+    path("products/<int:pk>/<int:page>/", mainapp.category, name="category"),
     path("product/<int:pk>/", mainapp.product, name="product"),
 ]
 
