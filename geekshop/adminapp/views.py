@@ -1,7 +1,6 @@
 from typing import List
 
-from adminapp.forms import (CategoryEditForm, ProductEditForm, RegisterForm,
-                            UserEditForm)
+from adminapp.forms import CategoryEditForm, ProductEditForm, RegisterForm, UserEditForm
 from adminapp.utils import check_is_superuser
 from authapp.models import ShopUser
 from django.http.response import HttpResponseRedirect

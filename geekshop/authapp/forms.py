@@ -1,7 +1,10 @@
-from authapp.models import ShopUser
+from authapp.models import ShopUser, ShopUserProfile
 from django import forms
-from django.contrib.auth.forms import (AuthenticationForm, UserChangeForm,
-                                       UserCreationForm)
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    UserChangeForm,
+    UserCreationForm,
+)
 
 
 class LoginForm(AuthenticationForm):
@@ -11,7 +14,13 @@ class LoginForm(AuthenticationForm):
 class RegisterForm(UserCreationForm):
     class Meta:
         model = ShopUser
-        fields = ("username",)
+        fields = ("username", "email")
+
+    def save(self, commit=True):
+        user = super().save(commit)
+        user.is_active = False
+        user.save()
+        return user
 
 
 class UserEditForm(UserChangeForm):
@@ -30,3 +39,9 @@ class UserEditForm(UserChangeForm):
             raise forms.ValidationError("Мы работаем только во Владикавказе.")
 
         return self.cleaned_data["city"]
+
+
+class UserProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = ShopUserProfile
+        fields = ("gender", "about")

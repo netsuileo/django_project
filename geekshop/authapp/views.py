@@ -1,9 +1,13 @@
-from authapp.forms import LoginForm, RegisterForm, UserEditForm
+from authapp.forms import LoginForm, RegisterForm, UserEditForm, UserProfileEditForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+
+from .models import ShopUser
+from .utils import send_verification_mail
 
 
 def login(request):
@@ -30,7 +34,8 @@ def register(request):
     if request.method == "POST":
         form = RegisterForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            send_verification_mail(user)
             return HttpResponseRedirect(reverse("auth:login"))
 
     return render(
@@ -38,22 +43,54 @@ def register(request):
     )
 
 
+@transaction.atomic
 @login_required
 def edit(request):
-    form = UserEditForm(instance=request.user)
+    user_form = UserEditForm(instance=request.user)
+    profile_form = UserProfileEditForm(instance=request.user.profile)
     if request.method == "POST":
-        form = UserEditForm(
+        user_form = UserEditForm(
             instance=request.user, data=request.POST, files=request.FILES
         )
-        if form.is_valid():
-            form.save()
+        profile_form = UserProfileEditForm(
+            instance=request.user.profile, data=request.POST
+        )
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
             return HttpResponseRedirect(reverse("index"))
 
     return render(
         request,
         "authapp/edit.html",
-        context={"title": "Редактирование данных", "form": form},
+        context={
+            "title": "Редактирование данных",
+            "user_form": user_form,
+            "profile_form": profile_form,
+        },
     )
+
+
+def verify(request, email, key):
+    try:
+        user = ShopUser.objects.get(email=email, activation_key=key)
+        if user.is_activation_key_expired:
+            return render(
+                request,
+                "authapp/verification.html",
+                context={"message": "Key is expired"},
+            )
+        user.activate()
+        user.save()
+        return render(
+            request, "authapp/verification.html", context={"message": "Success!"}
+        )
+    except ShopUser.DoesNotExist:
+        return render(
+            request,
+            "authapp/verification.html",
+            context={"message": "Verification failed"},
+        )
 
 
 def logout(request):

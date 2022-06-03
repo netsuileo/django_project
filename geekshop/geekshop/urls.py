@@ -20,6 +20,7 @@ from django.urls import include, path
 from mainapp import views as mainapp
 
 urlpatterns = [
+    path("social/", include("social_django.urls", namespace="social")),
     path("admin/", include("adminapp.urls", namespace="admin")),
     path("auth/", include("authapp.urls", namespace="auth")),
     path("basket/", include("basketapp.urls", namespace="basket")),
