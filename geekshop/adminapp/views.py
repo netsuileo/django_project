@@ -1,29 +1,14 @@
-from typing import List
-
-from adminapp.forms import CategoryEditForm, ProductEditForm, RegisterForm, UserEditForm
-from adminapp.utils import check_is_superuser
-from authapp.models import ShopUser
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
-from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, ListView, UpdateView
+
+from adminapp.forms import (CategoryEditForm, ProductEditForm, RegisterForm,
+                            UserEditForm)
+from authapp.models import ShopUser
 from mainapp.models import Category, Product
-
-
-class TitleMixin:
-    title = None
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = self.title
-        return context
-
-
-class SuperuserRequiredMixin:
-    @method_decorator(check_is_superuser)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+from utils.decorators import check_is_superuser
+from utils.mixins import SuperuserRequiredMixin, TitleMixin
 
 
 class UserListView(SuperuserRequiredMixin, TitleMixin, ListView):

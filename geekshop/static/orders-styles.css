@@ -3,10 +3,6 @@
     padding: 1em 2em;
 }
 
-.product-image {
-    max-width: 240px;
-}
-
 .button-secondary {
     color: white;
     background: rgb(66, 184, 221);
@@ -16,6 +12,7 @@
     margin: 1em 0;
 }
 
-.basket_summary {
-    margin: 0.5em 0;
+.inactive {
+    color: gray;
+    background-color: lightgray;
 }

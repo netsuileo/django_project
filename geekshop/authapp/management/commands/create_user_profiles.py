@@ -1,5 +1,6 @@
-from authapp.models import ShopUser, ShopUserProfile
 from django.core.management.base import BaseCommand
+
+from authapp.models import ShopUser, ShopUserProfile
 
 
 class Command(BaseCommand):

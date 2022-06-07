@@ -1,7 +1,8 @@
-from authapp.models import ShopUser
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.forms.widgets import HiddenInput
+
+from authapp.models import ShopUser
 from mainapp.models import Category, Product
 
 

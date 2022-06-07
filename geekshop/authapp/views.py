@@ -1,10 +1,12 @@
-from authapp.forms import LoginForm, RegisterForm, UserEditForm, UserProfileEditForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+
+from authapp.forms import (LoginForm, RegisterForm, UserEditForm,
+                           UserProfileEditForm)
 
 from .models import ShopUser
 from .utils import send_verification_mail

@@ -17,6 +17,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+
 from mainapp import views as mainapp
 
 urlpatterns = [
@@ -24,6 +25,7 @@ urlpatterns = [
     path("admin/", include("adminapp.urls", namespace="admin")),
     path("auth/", include("authapp.urls", namespace="auth")),
     path("basket/", include("basketapp.urls", namespace="basket")),
+    path("orders/", include("ordersapp.urls", namespace="orders")),
     path("", mainapp.index, name="index"),
     path("contact", mainapp.contact, name="contact"),
     path("products/", mainapp.products, name="products"),

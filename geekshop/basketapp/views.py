@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+
 from mainapp.models import Product
 
 from .models import Basket

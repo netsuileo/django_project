@@ -2,8 +2,9 @@
 
 import uuid
 
-import authapp.models
 from django.db import migrations, models
+
+import authapp.models
 
 
 class Migration(migrations.Migration):
