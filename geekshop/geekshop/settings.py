@@ -123,7 +123,7 @@ AUTHENTICATION_BACKENDS = [
 SOCIAL_AUTH_VK_OAUTH2_KEY = os.environ.get("SOCIAL_AUTH_VK_OAUTH2_KEY")
 SOCIAL_AUTH_VK_OAUTH2_SECRET = os.environ.get("SOCIAL_AUTH_VK_OAUTH2_SECRET")
 SOCIAL_AUTH_VK_OAUTH2_IGNORE_DEFAULT_SCOPE = True
-SOCIAL_AUTH_VK_OAUTH2_SCOPES = [
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = [
     "email",
 ]
 
@@ -137,7 +137,7 @@ SOCIAL_AUTH_PIPELINE = (
     "social_core.pipeline.social_auth.associate_user",
     "social_core.pipeline.social_auth.load_extra_data",
     "social_core.pipeline.user.user_details",
-    "authapp.pipeline.get_user_gender",
+    "authapp.pipeline.save_user_profile",
 )
 
 # Internationalization

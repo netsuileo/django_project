@@ -23,8 +23,9 @@ class OrderListView(LoginRequiredMixin, TitleMixin, ListView):
 @login_required
 @transaction.atomic
 def create_order(request):
-    basket_items = request.user.basket.all()
-    if not basket_items:
+    basket = request.user.basket
+    basket_items = basket.all()
+    if not basket_items or not basket.can_create_order():
         return HttpResponseBadRequest()
 
     order = Order(user=request.user)
@@ -70,6 +71,7 @@ class OrderUpdateView(LoginRequiredMixin, TitleMixin, UpdateView):
     def get_context_data(self, **kwargs):
         formset = kwargs.get("formset", OrderItemFormset(instance=self.object))
         context = super().get_context_data(**kwargs)
+
         context["orderitems"] = formset
         return context
 
@@ -82,6 +84,7 @@ class OrderUpdateView(LoginRequiredMixin, TitleMixin, UpdateView):
         else:
             return self.form_invalid(form, formset)
 
+    @transaction.atomic
     def form_valid(self, form, formset):
         self.object = form.save()
         formset.save()

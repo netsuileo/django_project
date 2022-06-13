@@ -8,5 +8,7 @@ class OrderItemForm(forms.ModelForm):
         model = OrderItem
         exclude = ("order",)
 
+    product_price = forms.DecimalField(required=False, disabled=True)
+    summary = forms.DecimalField(required=False, disabled=True)
 
-OrderItemFormset = forms.inlineformset_factory(Order, OrderItem, OrderItemForm, extra=2)
+OrderItemFormset = forms.inlineformset_factory(Order, OrderItem, OrderItemForm, extra=0)
