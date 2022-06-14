@@ -225,3 +225,6 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.profiling.ProfilingPanel',
     "template_profiler_panel.panels.template.TemplateProfilerPanel",
 ]
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': 'utils.debug_toolbar.show_debug_toolbar'
+}
