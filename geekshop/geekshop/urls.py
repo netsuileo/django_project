@@ -21,6 +21,7 @@ from django.urls import include, path
 from mainapp import views as mainapp
 
 urlpatterns = [
+    path('__debug__/', include('debug_toolbar.urls')),
     path("social/", include("social_django.urls", namespace="social")),
     path("admin/", include("adminapp.urls", namespace="admin")),
     path("auth/", include("authapp.urls", namespace="auth")),
